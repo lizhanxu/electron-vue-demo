@@ -1,5 +1,6 @@
 <template>
   <div id="wrapper">
+    <!-- 这里的 @ 是 'src/renderer' 的别名-->
     <img id="logo" src="~@/assets/logo.png" alt="electron-vue">
     <main>
       <div class="left-side">
@@ -37,6 +38,7 @@
     components: { SystemInformation },
     methods: {
       open (link) {
+        // 打开外部链接
         this.$electron.shell.openExternal(link)
       }
     }
