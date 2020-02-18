@@ -5,6 +5,7 @@
     <title>electron-vue-project</title>
     <% if (htmlWebpackPlugin.options.nodeModules) { %>
       <!-- Add `node_modules/` to global paths so `require` works properly in development -->
+      <!-- 将' node_modules/ '添加到全局路径中，这样' require '在开发中才能正常工作,即让非主进程也能使用require -->
       <script>
         require('module').globalPaths.push('<%= htmlWebpackPlugin.options.nodeModules.replace(/\\/g, '\\\\') %>')
       </script>
@@ -13,6 +14,7 @@
   <body>
     <div id="app"></div>
     <!-- Set `__static` path to static files in production -->
+    <!-- 设置自定义全局变量`__static`，在配置文件中会取出该路径 -->
     <% if (!process.browser) { %>
       <script>
         if (process.env.NODE_ENV !== 'development') window.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')

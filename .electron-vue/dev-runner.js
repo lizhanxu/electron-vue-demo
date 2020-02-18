@@ -3,11 +3,11 @@
 const chalk = require('chalk')
 const electron = require('electron')
 const path = require('path')
-const { say } = require('cfonts')
+const { say } = require('cfonts')    // 用于在控制台打印特殊好看的字体
 const { spawn } = require('child_process')
 const webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
-const webpackHotMiddleware = require('webpack-hot-middleware')
+const webpackHotMiddleware = require('webpack-hot-middleware')   //单独的热加载功能，实现模块的热替换
 
 const mainConfig = require('./webpack.main.config')
 const rendererConfig = require('./webpack.renderer.config')
@@ -16,6 +16,7 @@ let electronProcess = null
 let manualRestart = false
 let hotMiddleware
 
+// 打印日志的方法
 function logStats (proc, data) {
   let log = ''
 
@@ -38,8 +39,13 @@ function logStats (proc, data) {
   console.log(log)
 }
 
+/**
+ * 启动渲染进程
+ * 主要是webpack-dev-server和webpack-hot-middleware的配置
+ */
 function startRenderer () {
   return new Promise((resolve, reject) => {
+    // concat() 方法用于连接两个或多个数组。
     rendererConfig.entry.renderer = [path.join(__dirname, 'dev-client')].concat(rendererConfig.entry.renderer)
     rendererConfig.mode = 'development'
     const compiler = webpack(rendererConfig)
@@ -73,10 +79,14 @@ function startRenderer () {
       }
     )
 
+    // 端口设置
     server.listen(9080)
   })
 }
 
+/**
+ * 启动主进程
+ */
 function startMain () {
   return new Promise((resolve, reject) => {
     mainConfig.entry.main = [path.join(__dirname, '../src/main/index.dev.js')].concat(mainConfig.entry.main)
@@ -101,6 +111,7 @@ function startMain () {
         manualRestart = true
         process.kill(electronProcess.pid)
         electronProcess = null
+        // 启动electron
         startElectron()
 
         setTimeout(() => {
@@ -176,8 +187,10 @@ function greeting () {
 }
 
 function init () {
+  // 打印漂亮字体的electron-vue
   greeting()
 
+  // 启动主进程和渲染进程，然后再启动electron
   Promise.all([startRenderer(), startMain()])
     .then(() => {
       startElectron()

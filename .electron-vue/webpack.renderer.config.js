@@ -96,6 +96,13 @@ let rendererConfig = {
       }
     ]
   },
+  /**
+   * true: The filename of the input file relative to the context option.
+   * false: The regular Node.js __filename behavior. The filename of the output file when run in a Node.js environment.
+   * 
+   * true: The dirname of the input file relative to the context option.
+   * false: The regular Node.js __dirname behavior. The dirname of the output file when run in a Node.js environment.
+   */
   node: {
     __dirname: process.env.NODE_ENV !== 'production',
     __filename: process.env.NODE_ENV !== 'production'
@@ -106,6 +113,18 @@ let rendererConfig = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: path.resolve(__dirname, '../src/index.ejs'),
+      templateParameters(compilation, assets, options) {
+        return {
+          compilation: compilation,
+          webpack: compilation.getStats().toJson(),
+          webpackConfig: compilation.options,
+          htmlWebpackPlugin: {
+            files: assets,
+            options: options
+          },
+          process,
+        };
+      },
       minify: {
         collapseWhitespace: true,
         removeAttributeQuotes: true,

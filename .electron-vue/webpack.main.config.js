@@ -28,6 +28,13 @@ let mainConfig = {
       }
     ]
   },
+  /**
+   * true: The filename of the input file relative to the context option.
+   * false: The regular Node.js __filename behavior. The filename of the output file when run in a Node.js environment.
+   * 
+   * true: The dirname of the input file relative to the context option.
+   * false: The regular Node.js __dirname behavior. The dirname of the output file when run in a Node.js environment.
+   */
   node: {
     __dirname: process.env.NODE_ENV !== 'production',
     __filename: process.env.NODE_ENV !== 'production'
