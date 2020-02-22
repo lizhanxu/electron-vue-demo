@@ -7,6 +7,7 @@ const chalk = require('chalk')
 const del = require('del')
 const { spawn } = require('child_process')
 const webpack = require('webpack')
+// multispinner 是在命令行执行时等待的样式,并且能根据结果返回不同的提示信息.
 const Multispinner = require('multispinner')
 
 
