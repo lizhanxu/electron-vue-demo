@@ -5,7 +5,7 @@
     <title>electron-vue-project</title>
     <% if (htmlWebpackPlugin.options.nodeModules) { %>
       <!-- Add `node_modules/` to global paths so `require` works properly in development -->
-      <!-- 将' node_modules/ '添加到全局路径中，这样' require '在开发中才能正常工作,即让非主进程也能使用require -->
+      <!-- 将' node_modules/ '添加到全局路径中，这样' require '在  开发  中才能正常工作,即让非主进程也能使用require -->
       <script>
         require('module').globalPaths.push('<%= htmlWebpackPlugin.options.nodeModules.replace(/\\/g, '\\\\') %>')  //将双斜杠替换成四斜杠
       </script>
